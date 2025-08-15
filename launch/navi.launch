@@ -1,8 +1,0 @@
-<launch>
-    <!-- Movement check node -->
-    <node pkg="cml_task" type="movement_check.py" name="check_moving" output="screen"/>
-
-    <!-- Voice trigger node -->
-    <node pkg="cml_task" type="voice_trigger_node.py" name="voice_trigger_node" output="screen"/>
-    
-</launch>

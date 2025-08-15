@@ -1,0 +1,24 @@
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
+# Default Ultralytics settings for ByteTrack tracker when using mode="track"
+# For documentation and examples see https://docs.ultralytics.com/modes/track/
+# For ByteTrack source code see https://github.com/ifzhang/ByteTrack
+
+tracker_type: bytetrack
+
+# Association thresholds — stricter to avoid false matches
+track_high_thresh: 0.85     # Require higher confidence for first association
+track_low_thresh: 0.05       # Require decent confidence even during occlusion
+match_thresh: 0.8           # Keep high so mismatched objects aren't linked
+
+# Score fusion helps, but only if your detector is good
+fuse_score: True
+
+# New track creation — require very confident detection before starting a track
+new_track_thresh: 0.85
+
+# Drop low-quality detections
+min_box_area: 100           # Ignore tiny detections (often false positives)
+
+# How long to keep a track without detection (in frames)
+track_buffer: 90            # Lower from 180 to drop ghosts sooner

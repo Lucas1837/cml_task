@@ -6,7 +6,7 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import actionlib
 from std_msgs.msg import Bool
 activate_pub = rospy.Publisher('/activate_model', Bool, queue_size=10)
-
+    
 def send_waypoints(client, waypoint):
     goal = MoveBaseGoal()
     goal.target_pose.header.frame_id = "map"
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     client.wait_for_server()
 
     # Define multiple waypoints
-    waypoint = Pose(position=Point(0, 0, 0), orientation=Quaternion(0.0, 0.0, 0.0, 1.0))
+    waypoint = Pose(position=Point(-104.54584, -100.74004, 0), orientation=Quaternion(0.0, 0.0, 0.0, 1.0))
 
     # Send the waypoints to the robot
     send_waypoints(client, waypoint)

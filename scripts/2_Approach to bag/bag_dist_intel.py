@@ -114,7 +114,7 @@ class BagDetector:
                 detections = [
                     (conf, box.xyxy[0].tolist())
                     for box, conf in zip(results.boxes, results.boxes.conf)
-                    if conf >= 0.8
+                    if conf >= 0.7
                 ]
 
                 detections.sort(reverse=True, key=lambda x: x[0])
@@ -136,6 +136,7 @@ class BagDetector:
                         center_y = (y1 + y2) // 2
                         top_center.append((center_x, center_y))
                     # self.flag_pointed = True
+                    self.rotate = True
                     # self.bag_side = 2
                     if self.flag_pointed and self.rotate:
                         if len(top_center) == 2 and self.bag_side != 0:
@@ -187,3 +188,4 @@ if __name__ == '__main__':
         detector.process_frames()
     except rospy.ROSInterruptException:
         pass
+

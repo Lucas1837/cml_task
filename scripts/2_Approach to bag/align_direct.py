@@ -12,18 +12,14 @@ class KobukiHorizontalMover:
 
         self.cmd_pub = rospy.Publisher('/mobile_base/commands/velocity', Twist, queue_size=1)
         self.aligned_pub = rospy.Publisher('/aligned', Bool, queue_size=10)
-        rospy.Subscriber('/reach_distance',Bool,self.reachcallback)
         rospy.Subscriber('/horizontal_dist', Float32, self.dist_callback,queue_size=1)
         rospy.Subscriber('/odom', Odometry, self.odom_callback)
         self.current_yaw = 0.0
         self.current_pos = None
         self.executed = False
         self.rate = rospy.Rate(10)
-        self.reached = False
         self.last_horz = None
 
-    def reachcallback(self,msg):
-        self.reached = msg.data
 
     def odom_callback(self, msg):
         # Update yaw
@@ -35,19 +31,20 @@ class KobukiHorizontalMover:
         self.current_pos = (pos.x, pos.y)
         if self.executed:
                 rospy.sleep(1)
+                subprocess.Popen(['rosrun', 'cml', 'handle_det_intel.py'])
                 subprocess.Popen(['rosrun', 'cml', 'gothrough.py'])
                 subprocess.Popen(['rosrun', 'cml', 'armIK.py'])
                 rospy.signal_shutdown("Aligned Task completed")
 
 
     def dist_callback(self, msg):
-        if not self.executed and self.reached: 
-            rospy.loginfo(f"reach:{self.reached}")
+        if not self.executed: 
+            # rospy.loginfo(f"reach:{self.reached}")
             horiz_mm = msg.data 
             rospy.loginfo(f"Received horizontal distance: {horiz_mm:.1f} mm")
-            if self.last_horz is not None and abs(self.last_horz - horiz_mm) > self.last_horz:
-                rospy.loginfo("Horizontal distance is not stable, skipping execution.")
-                return
+            # if self.last_horz is not None and abs(self.last_horz - horiz_mm) > self.last_horz:
+            #     rospy.loginfo("Horizontal distance is not stable, skipping execution.")
+            #     return
             if abs(horiz_mm) > 40:
                 self.execute_move(horiz_mm)
                 self.last_horz = horiz_mm

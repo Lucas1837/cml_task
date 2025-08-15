@@ -1,4 +1,4 @@
-#! /home/lucas/catkin_ws/src/cml/venv/bin/python3
+#!/home/lucas/catkin_ws/src/edurobot/myenv/bin/python3
 import rospy
 from nav_msgs.msg import Odometry
 from std_msgs.msg import String

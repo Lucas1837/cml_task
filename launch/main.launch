@@ -1,11 +1,13 @@
 <launch>
 
-    <node name="kobuki_align" pkg="cml_task" type="bag_align.py" output="screen"/>
-    <node name="hand_detection_node" pkg="cml_task" type="hand_detect.py" output="screen"/>
-    <node name="bag_detection_node" pkg="cml_task" type="bag_dist_intel.py" output="screen"/>
-    <node name="turtlebot_control_node" pkg="cml_task" type="robo_bag.py" output="screen"/>
-    <node name="initial_node" pkg="cml_task" type="initialpose.py" output="screen"/>
-    <node name="kobuki_rotate" pkg="cml_task" type="45degree.py" output="screen"/>
+    <!-- <node name="kobuki_align" pkg="cml" type="bag_align.py" output="screen"/> -->
+    <node name="kobuki_align" pkg="cml" type="align_direct.py" output="screen"/> 
+    <node name="hand_detection_node" pkg="cml" type="hand_detect.py" output="screen"/>
+    <node name="bag_detection_node" pkg="cml" type="bag_dist_intel.py" output="screen"/>
+    <!-- <node name="turtlebot_control_node" pkg="cml" type="robo_bag.py" output="screen"/> -->
+    <node name="initial_node" pkg="cml" type="initialpose.py" output="screen"/>
+    <!-- <node name="kobuki_rotate" pkg="cml" type="45degree.py" output="screen"/> -->
+    <node name="kill_switch" pkg="cml" type="kill.py" output="screen"/>
     
     <include file="$(find kobuki_node)/launch/robot_with_tf.launch" />
     <include file="$(find nav)/launch/navigation.launch" />
@@ -13,4 +15,5 @@
     <include file="$(find gtts_speech)/launch/basic.launch" />
 
 </launch>
+
 
